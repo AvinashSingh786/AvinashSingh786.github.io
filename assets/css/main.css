@@ -3170,7 +3170,9 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 100%;
+	max-width: 100%;
+    width: auto;
+	height: auto;
     -webkit-filter: grayscale(100%); /* Chrome, Safari, Opera */
     filter: grayscale(100%);
     -webkit-transition: all 0.3s;
