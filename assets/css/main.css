@@ -3142,7 +3142,10 @@
 	}
 
  	.skill {
- 		/*font-size: 3em;*/
+ 		font-size: 2.5em;
+		color: #CF6C28;
+		text-shadow: 2px 1px black;
+
  	}
 
 
