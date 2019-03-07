@@ -1,0 +1,324 @@
+<!-- Avinash Singh -->
+
+
+<html>
+
+<head>
+<title>Shapes</title>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+<script type="text/javascript" src="glMatrix-0.9.5.min.js"></script>
+<script type="text/javascript" src="webgl-utils.js"></script>
+<script type="text/javascript" src="initGl.js"></script>
+<script type="text/javascript" src="makeShapes.js"></script>
+<script type="text/javascript" src="utils.js"></script>
+<script type="text/javascript" src="initShaders.js"></script>
+<script type="text/javascript" src="getShader.js"></script>
+<link rel="stylesheet" type="text/css" href="style.css">
+<script id="shader-fs" type="x-shader/x-fragment">
+    precision mediump float;
+
+    varying vec4 vColor;
+
+    void main(void)
+    {
+        gl_FragColor = vColor;
+    }
+</script>
+
+<script id="shader-vs" type="x-shader/x-vertex">
+    attribute vec3 aVertexPosition;
+    attribute vec4 aVertexColor;
+
+    uniform mat4 uMVMatrix;
+    uniform mat4 uPMatrix;
+
+    varying vec4 vColor;
+
+    void main(void)
+    {
+        gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+        vColor = aVertexColor;
+    }
+</script>
+
+
+<script type="text/javascript">
+
+    var rPyramid = 0;
+    var rCube = 0;
+    var md = 0;
+    var en = 0;
+
+    // // Translation
+    // var cubeXT = 3.0;
+    // var cubeYT = 0.0;
+    // var cubeZT = 0.0;
+
+    // var pyramidXT = -1.5;
+    // var pyramidYT = 0.0;
+    // var pyramidZT = -8.0;
+
+
+    // // Rotation
+    // var cubeXR = 0;
+    // var cubeYR = 0;
+    // var cubeZR = 0;
+
+    // var pyramidXR = 0;
+    // var pyramidYR = 0;
+    // var pyramidZR = 0;
+
+
+    // Shear
+
+    function drawScene()
+    {
+
+
+        // **************************************************
+        //                              Pyramid
+        // **************************************************
+
+
+        gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
+        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+        mat4.perspective(45, gl.viewportWidth / gl.viewportHeight, 0.1, 100.0, pMatrix);
+
+       identity(mvMatrix);
+
+
+        translate(mvMatrix, pyramidXT, pyramidYT, pyramidZT);
+
+         mvPushMatrix();
+
+        if (status == 1)
+        {
+            mvMatrix = rotateX(mvMatrix, degToRad(rPyramid));
+
+        }
+
+        if (status == 2) mvMatrix = rotateY(mvMatrix, degToRad(rPyramid));
+        if (status == 3) mvMatrix = rotateZ(mvMatrix, degToRad(rPyramid));
+
+
+        if (scale == 1) scaleX(mvMatrix, 2);
+        if (scale == 2) scaleY(mvMatrix, 2);
+        if (scale == 3) scaleZ(mvMatrix, 2);
+
+        if (shear == 1) mvMatrix = shearX(mvMatrix, degToRad(rPyramid));
+        if (shear == 2) mvMatrix = shearY(mvMatrix, degToRad(rPyramid));
+        if (shear == 3) mvMatrix = shearZ(mvMatrix, degToRad(rPyramid));
+
+// scaleY(mvMatrix, 0.7);
+       if (house == 1) scaleY(mvMatrix, 0.7);
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, pyramidVertexPositionBuffer);
+        gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, pyramidVertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
+        gl.bindBuffer(gl.ARRAY_BUFFER, pyramidVertexColorBuffer);
+        gl.vertexAttribPointer(shaderProgram.vertexColorAttribute, pyramidVertexColorBuffer.itemSize, gl.FLOAT, false, 0, 0);
+        setMatrixUniforms();
+        gl.drawArrays(gl.TRIANGLES, 0, pyramidVertexPositionBuffer.numItems);
+
+          mvPopMatrix();
+
+
+        // **************************************************
+        //                              CUBE
+        // **************************************************
+
+
+        translate(mvMatrix, cubeXT, cubeYT, cubeZT);
+         mvPushMatrix();
+// scaleY(mvMatrix, 0.7);
+
+        if (status == 4) mvMatrix = rotateX(mvMatrix, degToRad(rCube));
+        if (status == 5) mvMatrix = rotateY(mvMatrix, degToRad(rCube));
+        if (status == 6) mvMatrix = rotateZ(mvMatrix, degToRad(rCube));
+
+       // mat4.rotate(mvMatrix, degToRad(rCube), [0,0,1]);
+        if (house == 1) scaleY(mvMatrix, 0.7);
+
+        if (scale == 4) scaleX(mvMatrix, 2);
+        if (scale == 5) scaleY(mvMatrix, 2);
+        if (scale == 6) scaleZ(mvMatrix, 2);
+
+        if (shear == 4) mvMatrix = shearX(mvMatrix, degToRad(rCube));
+        if (shear == 5) mvMatrix = shearY(mvMatrix, degToRad(rCube));
+        if (shear == 6) mvMatrix = shearZ(mvMatrix, degToRad(rCube));
+
+        if (md == 1)  mvMatrix = rotateX(mvMatrix, degToRad(rCube));
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, cubeVertexPositionBuffer);
+        gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, cubeVertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
+        gl.bindBuffer(gl.ARRAY_BUFFER, cubeVertexColorBuffer);
+        gl.vertexAttribPointer(shaderProgram.vertexColorAttribute, cubeVertexColorBuffer.itemSize, gl.FLOAT, false, 0, 0);
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cubeVertexIndexBuffer);
+        setMatrixUniforms();
+        gl.drawElements(gl.TRIANGLES, cubeVertexIndexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
+
+
+           mvPopMatrix();
+
+
+           // console.log("CX: " + cubeXT + "Y: " + cubeYT + "Z: "+ cubeZT);
+           // console.log("PX: "+ pyramidXT + "Y: " + pyramidYT +"Z: "+ pyramidZT);
+
+    }
+
+
+
+
+</script>
+
+
+</head>
+
+
+<body onload="webGLStart();">
+    <center>
+        <div id="Detail">
+            <h2>WebGL Shapes</h2>
+
+        </div>
+    </center>
+
+    <canvas id="canvas" style="border: none;" width="1000" height="1000"></canvas>
+
+    <script>
+        var wid, hig;
+        wid = window.innerWidth
+            || document.documentElement.clientWidth
+            || document.body.clientWidth;
+
+        hig = window.innerHeight
+            || document.documentElement.clientHeight
+            || document.body.clientHeight;
+
+        document.getElementById("canvas").width = wid - 80;
+        document.getElementById("canvas").height = hig - 200;
+
+
+    </script>
+
+    <div>
+        <center>
+       <div id="Control">
+            <button onclick="reset();">Reset</button>
+            <button onclick="clockwise()" id="c">ClockWise</button>
+            <button onclick="makeHouse()">Make House</button>
+            <button onclick="makeHouse2()">Make House 2</button>
+             <div id="wrapper">
+                <div id="p">
+                 <center><h3 style="color: white;">PYRAMID</h3> </center>
+
+                    TRANSLATE X-Axis-LEFT: [<p>LEFT</p>] <br/>
+                    TRANSLATE X-Axis-RIGHT: [<p>RIGHT</p>] <br/>
+
+                    TRANSLATE Y-Axis-UP: [<p>UP</p>] <br/>
+                    TRANSLATE Y-Axis-DOWN: [<p>DOWN</p>] <br/>
+
+                    TRANSLATE Z-Axis-IN: [<p>PageUp</p>] <br/>
+                    TRANSLATE Z-Axis-OUT: [<p>PageDown</p>] <br/>
+
+                    ROTATE X-Axis: [<p>1</p>] <br/>
+                    ROTATE Y-Axis: [<p>2</p>] <br/>
+                    ROTATE Z-Axis: [<p>3</p>] <br/>
+
+                    SHEAR X-Axis: [<p>B</p>] <br/>
+                    SHEAR Y-AXIS: [<p>N</p>] <br/>
+                    SHEAR Z-Axis: [<p>M</p>] <br/>
+
+
+                    SCALE X-Axis: [<p>J</p>] <br/>
+                    SCALE Y-AXIS: [<p>K</p>] <br/>
+                    SCALE Z-Axis: [<p>L</p>] <br/>
+
+                </div>
+
+
+                <div id="cube">
+                    <center><h3 style="color: white;">CUBE</h3></center>
+                    TRANSLATE X-Axis-LEFT: [<p>A</p>] <br/>
+                    TRANSLATE X-Axis-RIGHT: [<p>D</p>] <br/>
+
+                    TRANSLATE Y-Axis-UP: [<p>W</p>] <br/>
+                    TRANSLATE Y-Axis-DOWN: [<p>S</p>] <br/>
+
+                    TRANSLATE Z-Axis-IN: [<p>Q</p>] <br/>
+                    TRANSLATE Z-Axis-OUT: [<p>E</p>] <br/>
+
+                    ROTATE X-Axis: [<p>Z</p>] <br/>
+                    ROTATE Y-Axis: [<p>X</p>] <br/>
+                    ROTATE Z-Axis: [<p>C</p>] <br/>
+
+                    SHEAR X-Axis: [ <p>[</p> ] <br/>
+                    SHEAR Y-AXIS: [ <p>]</p> ] <br/>
+                    SHEAR Z-Axis: [ <p>\</p> ] <br/>
+
+                    SCALE X-Axis: [<p>I</p>] <br/>
+                    SCALE Y-AXIS: [<p>O</p>] <br/>
+                    SCALE Z-Axis: [<p>P</p>] <br/>
+
+                </div>
+            </div>
+        </div>
+
+
+        </center>
+
+    </div>
+
+
+    <script type="text/javascript">
+
+         var drag = false;
+
+         var canvas = document.getElementById("canvas");
+
+         function mouseDown(e)
+         {
+            drag = true;
+                md = 1;
+            return false;
+         }
+
+         function mouseUp(e)
+         {
+            drag = false;
+
+            if (en == 0)
+                md = 0;
+         }
+         var xx = 0;
+         function mouseMove(e)
+         {
+             //translate(mvMatrix, cubeXT+=2, cubeYT+=2, cubeZT+=2);
+             //console.log(xx);
+           if (en == 0)
+           {
+            if (xx < 20)
+            {
+                translate(mvMatrix, cubeXT+0.01, cubeYT+=0.04, cubeZT+=0.09);
+                xx++;
+            }
+            else if (xx < 40)
+            {
+                translate(mvMatrix, cubeXT-=0.01, cubeYT-=0.04, cubeZT-=0.09);
+                xx++;
+            }
+            else xx = 0;
+            }
+
+         }
+
+         document.getElementById("canvas").addEventListener("mousedown", mouseDown, false);
+         document.getElementById("canvas").addEventListener("mouseup", mouseUp, false);
+         document.getElementById("canvas").addEventListener("mouseout", mouseUp, false);
+         document.getElementById("canvas").addEventListener("mousemove", mouseMove, false);
+    </script>
+
+
+</body>
+
+</html>

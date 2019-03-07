@@ -1,0 +1,450 @@
+<!-- Avinash Singh -->
+ 
+
+<html>
+
+<head>
+<title>Trees</title>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+<script type="text/javascript" src="glMatrix-0.9.5.min.js"></script>
+<script type="text/javascript" src="webgl-utils.js"></script>
+<script type="text/javascript" src="initGl.js"></script>
+<script type="text/javascript" src="makeShapes.js"></script>
+<script type="text/javascript" src="utils.js"></script>
+<script type="text/javascript" src="initShaders.js"></script>
+<script type="text/javascript" src="getShader.js"></script>
+<link rel="stylesheet" type="text/css" href="style.css">
+
+        <script id="shader-vs" type="x-shader/x-vertex">
+
+            // program parameters
+            uniform mat4 uMVMatrix;
+            uniform mat4 uPMatrix;
+            uniform mat3 uNMatrix;
+
+            // per-vertex data
+            attribute vec3 aVertexPosition;
+            attribute vec3 aVertexNormal;
+            attribute vec4 aVertexColor;
+
+            // outputs
+            varying vec4 vColor;
+            varying vec4 vPosition;
+            varying vec3 vNormal;
+
+            void main(void)
+            {
+                // world coordinates (output to fragment shader)
+                vPosition = uMVMatrix * vec4(aVertexPosition, 1.0);
+                // image coordinates
+                gl_Position = uPMatrix * vPosition;
+                // other outputs to fragment shader
+                vColor = aVertexColor;
+                vNormal = uNMatrix * aVertexNormal;
+            }
+        </script>
+
+
+        <script id="shader-fs" type="x-shader/x-fragment">
+            #ifdef GL_ES
+            precision highp float;
+            #endif
+
+            // inputs
+            varying vec3 vNormal;
+            varying vec4 vPosition;
+            varying vec4 vColor;
+
+            // program controls
+            uniform bool uUseLighting; // If false, ignore the following parameters and apply only the material color, without any modulation
+
+            // ambiant light applied to all points
+            uniform vec3 uAmbientColor;
+
+            // directional light
+            uniform bool uUseDirectionalLighting;
+            uniform vec3 uLightingDirection;
+            uniform vec3 uDirectionalColor;
+
+            // point light
+            uniform bool uUsePointLighting;
+            uniform vec3 uPointLightingLocation;
+            uniform vec3 uPointLightingSpecularColor;
+            uniform vec3 uPointLightingDiffuseColor;
+
+            // specular reflection
+            uniform bool uUseSpecularLighting;
+            uniform float uMaterialShininess;
+
+
+            void main(void)
+            {
+                vec3 lightWeighting; // modulate object color
+
+                if (!uUseLighting) {
+                    lightWeighting = vec3(1.0, 1.0, 1.0); // no modulation
+                }
+                else // compute modulation due to lighting
+                {
+                    lightWeighting = uAmbientColor; // base lighting due to ambiant light
+
+                    if (uUseDirectionalLighting)
+                    {
+                        // interpolated normal
+                        vec3 normal = normalize(vNormal);
+                        // contribution between 0 and 1
+                        float directionalLightWeighting = max(dot(normal, uLightingDirection), 0.0);
+                        // add contribution
+                        lightWeighting += uDirectionalColor * directionalLightWeighting;
+                    }
+                    if (uUsePointLighting)
+                    {
+                        // vector s is different for each point
+                        vec3 lightDirection = normalize(uPointLightingLocation - vPosition.xyz);
+                        // interpolated normal
+                        vec3 normal = normalize(vNormal);
+                        // contribution between 0 and 1
+                        float diffuseLightWeighting = max(dot(normal,lightDirection),0.0);
+                        // add contribution
+                        lightWeighting += uPointLightingDiffuseColor * diffuseLightWeighting;
+
+                        // in this shader, we apply specular reflection only to point lights
+                        if (uUseSpecularLighting)
+                        {
+                            // vector v from current point to camera. Camera is always at (0,0,0)
+                            vec3 eyeDirection = normalize(-vPosition.xyz);
+                            // vector r is the symmetric of s with respect to n
+                            vec3 reflectionDirection = reflect(-lightDirection, normal);
+                            // dot product, bounded in (0,1)
+                            float v_dot_r = max(dot(reflectionDirection, eyeDirection),0.);
+                            // apply exponent to tune the shininess
+                            float specularLightWeighting = pow( v_dot_r, uMaterialShininess);
+                            // add contribution
+                            lightWeighting += uPointLightingSpecularColor * specularLightWeighting;
+                        }
+                    }
+                }
+                // Scale point color with lighting modulation.
+                gl_FragColor = vec4(vColor.rgb * lightWeighting, vColor.a);
+
+            }
+            </script>
+
+
+<script type="text/javascript">
+
+    var rPyramid = 0;
+    var rCube = 0;
+    var md = 0;
+    var en = 0;
+
+    // // Translation
+    // var cubeXT = 3.0;
+    // var cubeYT = 0.0;
+    // var cubeZT = 0.0;
+
+    // var pyramidXT = -1.5;
+    // var pyramidYT = 0.0;
+    // var pyramidZT = -8.0;
+
+
+    // // Rotation
+    // var cubeXR = 0;
+    // var cubeYR = 0;
+    // var cubeZR = 0;
+
+    var pyramidXR = 0;
+    var pyramidYR = 0;
+    var pyramidZR = 0;
+
+
+
+
+    function drawScene()
+    {
+
+
+        // **************************************************
+        //                              Pyramid
+        // **************************************************
+
+
+       gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
+       gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+       // console.log(rPyramid);
+      // rotateY(mvMatrix, degToRad(rPyramid));
+       orthogonal(-1.0, 1.0, -1.0, 1.0, -1.0, 1.0);
+
+       identity(mvMatrix);
+
+      gl.uniform1i(shaderProgram.useLightingUniform, true);
+
+
+
+
+        // translate(mvMatrix, pyramidXT, pyramidYT, pyramidZT);
+        if (document.getElementById('oblique').checked == true)
+         pMatrix =  oblique();
+        else if (document.getElementById('orthogonal').checked == true)
+            pMatrix = orthogonal(-1.0, 1.0, -1.0, 1.0, -50, 100);
+            else if (document.getElementById('perspective').checked == true)  mat4.perspective(45, gl.viewportWidth / gl.viewportHeight, 0.1, 100.0, pMatrix);
+                else identity(pMatrix);
+
+
+        gl.uniform1i(shaderProgram.useAmbientLightingUniform, document.getElementById("ambient").checked);
+        gl.uniform1i(shaderProgram.useDirectionalLightingUniform, document.getElementById("spot").checked);
+        gl.uniform1i(shaderProgram.usePointLightingUniform, document.getElementById("point").checked);
+
+
+        if (document.getElementById("point").checked == true)
+        {
+            point();
+        }
+        if (document.getElementById("spot").checked == true)
+        {
+            spot();
+        }
+        if (document.getElementById("ambient").checked == true)
+        {
+            ambient();
+
+        }
+         mvPushMatrix();
+
+
+
+        mvPopMatrix();
+
+        for (var i =  0.0; i < 6.5; i+=0.5)
+        {
+            mvPushMatrix();
+            rotateY(mvMatrix, degToRad(rPyramid));
+
+            if (status == 1) mvMatrix = rotateX(mvMatrix, degToRad(pyramidXR));
+            if (status == 2) mat4.rotate(mvMatrix, degToRad(pyramidYR/2), [0, 1, 0]);
+            if (status == 3) mvMatrix = rotateZ(mvMatrix, degToRad(pyramidXR));
+
+
+            if (scale == 1) scaleX(mvMatrix, 2);
+            if (scale == 2) scaleY(mvMatrix, 2);
+            if (scale == 3) scaleZ(mvMatrix, 2);
+
+            if (shear == 1) mvMatrix = shearX(mvMatrix, degToRad(pyramidXR));
+            if (shear == 2) mvMatrix = shearY(mvMatrix, degToRad(pyramidXR));
+            if (shear == 3) mvMatrix = shearZ(mvMatrix, degToRad(pyramidXR));
+
+            //     Triangle
+            translate(mvMatrix, pyramidXT , pyramidYT, pyramidZT - i );
+            gl.bindBuffer(gl.ARRAY_BUFFER, pyramidVertexPositionBuffer);
+            gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, pyramidVertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
+            gl.bindBuffer(gl.ARRAY_BUFFER, pyramidVertexColorBuffer);
+            gl.vertexAttribPointer(shaderProgram.vertexColorAttribute, pyramidVertexColorBuffer.itemSize, gl.FLOAT, false, 0, 0);
+            gl.bindBuffer(gl.ARRAY_BUFFER, triangleNormal);
+            gl.vertexAttribPointer(shaderProgram.vertexNormalAttribute, triangleNormal.itemSize, gl.FLOAT, false, 0, 0);
+            setMatrixUniforms();
+            gl.drawArrays(gl.TRIANGLES, 0, pyramidVertexPositionBuffer.numItems);
+
+
+            //      Cube
+            translate(mvMatrix, cubeXT, cubeYT, cubeZT);
+            gl.bindBuffer(gl.ARRAY_BUFFER, cubeVertexPositionBuffer);
+            gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, cubeVertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
+            gl.bindBuffer(gl.ARRAY_BUFFER, cubeVertexColorBuffer);
+            gl.vertexAttribPointer(shaderProgram.vertexColorAttribute, cubeVertexColorBuffer.itemSize, gl.FLOAT, false, 0, 0);
+            gl.bindBuffer(gl.ARRAY_BUFFER, cubeNormal);
+            gl.vertexAttribPointer(shaderProgram.vertexNormalAttribute, cubeNormal.itemSize, gl.FLOAT, false, 0, 0);
+
+            gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cubeVertexIndexBuffer);
+            setMatrixUniforms();
+            gl.drawElements(gl.TRIANGLES, cubeVertexIndexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
+
+            // translate(mvMatrix, pyramidXT + 10, pyramidYT + 2, pyramidZT - i );
+            // gl.bindBuffer(gl.ARRAY_BUFFER, pyramidVertexPositionBuffer);
+            // gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, pyramidVertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
+            // gl.bindBuffer(gl.ARRAY_BUFFER, pyramidVertexColorBuffer);
+            // gl.vertexAttribPointer(shaderProgram.vertexColorAttribute, pyramidVertexColorBuffer.itemSize, gl.FLOAT, false, 0, 0);
+            // setMatrixUniforms();
+            // gl.drawArrays(gl.TRIANGLES, 0, pyramidVertexPositionBuffer.numItems);
+
+            // //      Cube
+            // translate(mvMatrix, cubeXT, cubeYT, cubeZT);
+            // gl.bindBuffer(gl.ARRAY_BUFFER, cubeVertexPositionBuffer);
+            // gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, cubeVertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
+            // gl.bindBuffer(gl.ARRAY_BUFFER, cubeVertexColorBuffer);
+            // gl.vertexAttribPointer(shaderProgram.vertexColorAttribute, cubeVertexColorBuffer.itemSize, gl.FLOAT, false, 0, 0);
+            // gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cubeVertexIndexBuffer);
+            // setMatrixUniforms();
+            // gl.drawElements(gl.TRIANGLES, cubeVertexIndexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
+
+
+
+
+
+            mvPopMatrix();
+
+
+        }
+
+
+
+
+
+           // mvPopMatrix();
+
+
+           // console.log("CX: " + cubeXT + "  Y: " + cubeYT + "  Z: "+ cubeZT);
+           // console.log("PX: "+ pyramidXT + "  Y: " + pyramidYT +"  Z: "+ pyramidZT);
+
+    }
+
+
+
+
+</script>
+
+
+</head>
+
+
+<body onload="webGLStart();">
+    <center>
+        <div id="Detail">
+            <h2>WebGL Trees</h2>
+
+        </div>
+    </center>
+
+    <canvas id="canvas" style="border: none;" width="1000" height="1000"></canvas>
+
+    <script>
+        var wid, hig;
+        wid = window.innerWidth
+            || document.documentElement.clientWidth
+            || document.body.clientWidth;
+
+        hig = window.innerHeight
+            || document.documentElement.clientHeight
+            || document.body.clientHeight;
+
+        document.getElementById("canvas").width = wid - 80;
+        document.getElementById("canvas").height = hig - 200;
+
+
+    </script>
+
+    <div>
+        <center>
+        <center>
+
+
+           <br/>
+
+            <div id="p">
+                <input type="checkbox" id="orthogonal" >Orthogonal (1)</input>
+                <input type="checkbox" id="oblique" >Oblique (2)</input>
+                <input type="checkbox" id="perspective" checked="checked">Perspective (3)</input> <br/>
+
+                <input type="checkbox" id="point" >Point (q)</input>
+                <input type="checkbox" id="spot" >Spot (w)</input>
+                <input type="checkbox" id="ambient" checked="checked">Ambient (e)</input>
+                <h2> Lighting:</h2>
+                        <b>Colour:</b>
+                        <br /> <br/>
+                        R:  <input type="text" id="ambientR" value="0.5" /><br />
+                        G:  <input type="text" id="ambientG" value="0.5" /><br />
+                        B:  <input type="text" id="ambientB" value="0.3" /><br /><br />
+
+            </div>
+
+        </center>
+
+        </center>
+
+    </div>
+
+
+    <script type="text/javascript">
+
+         var drag = false;
+
+         var canvas = document.getElementById("canvas");
+
+         // function mouseDown(e)
+         // {
+         //    drag = true;
+         //        md = 1;
+         //    return false;
+         // }
+
+         // function mouseUp(e)
+         // {
+         //    drag = false;
+
+         //    if (en == 0)
+         //        md = 0;
+         // }
+
+            var x = -1, y = -1;
+            var md = false;
+            function handleMouseDown(event)
+            {
+                x = event.clientX;
+                y = event.clientY;
+
+                md = true;
+            }
+
+            function handleMouseUp(event)
+            {
+                x = -1;
+                y = -1;
+                md = false;
+            }
+
+            function handleMouseMove(event)
+            {
+                if (md == true)
+                {
+                    var xx = event.clientX;
+                    var yy = event.clientY;
+
+                    xx = (x-xx);
+                    yy = (y-yy);
+
+                    rPyramid = yy;
+
+                }
+            }
+
+
+
+         function mouseMove(e)
+         {
+
+                if (md)
+                {
+                    var xx = event.clientX;
+                    var yy = event.clientY;
+
+                    xx = (xx-x);
+                    yy = (yy-y);
+
+
+                  rPyramid = yy;
+                }
+
+
+         }
+
+         // document.getElementById("canvas").addEventListener("mousedown", mouseDown, false);
+         // document.getElementById("canvas").addEventListener("mouseup", mouseUp, false);
+         // document.getElementById("canvas").addEventListener("mouseout", mouseUp, false);
+         // document.getElementById("canvas").addEventListener("mousemove", mouseMove, false);
+    </script>
+
+
+</body>
+
+</html>

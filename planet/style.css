@@ -1,0 +1,76 @@
+/*Avinash Singh
+  14043778
+*/
+
+body
+{
+	text-align: center;
+	background-color: black;
+	color: white;
+
+}
+
+div#Detail
+{
+	/*border: 4px solid white;*/
+	margin: 0 auto;
+	display: block;
+	width: 800px;
+	text-align: center;
+	text-decoration-color: white;
+	letter-spacing: 3px;
+	position: absolute;
+	left: 16%;
+}
+
+h2
+{
+	color: yellow;
+}
+div#Control
+{
+	margin: 0 auto;
+	display: block;
+}
+
+div#s
+{
+	color: green;
+	width: 300px;
+    float:right;   
+    border: 3px solid red;
+    /*overflow: hidden; */
+    position: fixed;
+    display: block;
+	/*top: 60%;*/
+	right: 1%;
+	text-align: left;
+	bottom: -110%;
+	  /*z-index: -1; position:relative*/
+	
+}
+
+
+div#p
+{
+	color: cyan;
+	border: 3px solid green;
+	float: left;
+    overflow: hidden; 
+    position: fixed;
+    display: block;
+    /*top: 60%;*/
+    left: 1%;
+    text-align: left;
+    bottom: -100%;
+  /*z-index: -1; position:relative*/
+}
+
+p
+{
+	color: yellow;
+	margin: 0;
+    padding: 0;
+    display: inline;
+    
+}

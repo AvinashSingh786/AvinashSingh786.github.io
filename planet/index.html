@@ -1,0 +1,554 @@
+<!-- Avinash Singh -->
+<html>
+
+<head>
+<title>Planet</title>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/ico" href="img/icon.ico" />
+<script type="text/javascript" src="jquery-2.2.1.js"></script>
+
+<script type="text/javascript" src="utils.js"></script>
+
+<script type="text/javascript" src="three.min.js"></script>
+<link rel="stylesheet" type="text/css" href="style.css">
+
+ <script type="text/javascript" src="xRingGeometry.js"></script>
+  <script type="text/javascript" src="detector.js"></script> <script type="text/javascript" src="trackBallControls.js"></script>
+ <script src="CanvasRenderer.js"></script>
+ <script type="text/javascript">
+var x = 1.0;
+var y = 2.0;
+var z = 1.0;
+var scalex = 0.0;
+
+        $(document).on('ready', function() { (
+            function()
+            {
+                var webglEl = document.getElementById('webgl');
+                if (!Detector.webgl)
+                {
+                    Detector.addGetWebGLMessage(webglEl);
+                    return;
+                }
+
+                // THREE.ImageUtils.crossOrigin = '';
+                var width = window.innerWidth-30, height = window.innerHeight-34;
+                var radius = 0.45, segments = 32, rotation = 80;
+                var scene = new THREE.Scene();
+                var camera = new THREE.PerspectiveCamera(45, width / height, 0.05, 1000);
+                var currKeysPressed = {};
+                camera.position.z = 3;
+                camera.position.y = 2;
+                camera.position.x = 2;
+
+                var renderer = new THREE.WebGLRenderer();
+                renderer.setSize(width, height);
+                scene.add(new THREE.AmbientLight(0x553333)); //0x553333
+
+                var light = new THREE.DirectionalLight(0xffffff, 1, 1);
+                light.position.set(5, 3, 5);
+                scene.add(light);
+
+                var sphere = createSphere(radius, segments);
+                sphere.rotation.y = rotation;
+                scene.add(sphere);
+
+                var rings = createRings(radius, segments);
+                rings.rotation.y = rotation;
+                scene.add(rings);
+
+                var stars = createStars(90, 64);
+                scene.add(stars);
+
+                var sun = createSun(2, 32);
+                sun.position.set(4, 2, 5);
+                scene.add(sun);
+
+
+                var skyboxGeometry = new THREE.CubeGeometry(10000, 10000, 10000);
+                var skyboxMaterial = new THREE.MeshBasicMaterial({ color: 0x100101 , side: THREE.BackSide });
+                var skybox = new THREE.Mesh(skyboxGeometry, skyboxMaterial);
+
+                scene.add(skybox);
+
+                var controls = new THREE.TrackballControls(camera, renderer.domElement);
+                webglEl.appendChild(renderer.domElement);
+
+                 var particleMaterial;
+                 var particles;
+                 var particleSystem;
+                 var co = document.getElementById('color').value;
+
+                  var particles = new THREE.Geometry;
+                for (var p = 0; p < 200000; p++) {
+                    var particle = new THREE.Vector3(Math.random() * 500 - 250, Math.random() * 500 - 250, Math.random() * 500 - 250);
+                    particles.vertices.push(particle);
+                }
+                // var particleTexture = THREE.ImageUtils.loadTexture('img/snowflake.png');
+                var particleMaterial = new THREE.ParticleBasicMaterial({ transparent: true, size: 0.5, color: 0xffffff });
+                var particleSystem = new THREE.ParticleSystem(particles, particleMaterial);
+
+                scene.add(particleSystem);
+
+
+
+                window.onkeydown = keyDownHandler;
+
+                document.onmouseup = keyUpHandler;
+
+
+
+                var x = 4;
+                var flag = false;
+
+                function render()
+                {
+                    controls.update();
+                    sphere.rotation.y += 0.005;
+                    rings.rotation.y -= 0.02;
+                    sun.position.set(4, y, 5);
+
+                    if (!document.getElementById('opacity').checked)
+                    {
+                        sun.opacity = 0.0;
+                        sun.transparent = true;
+
+                    }
+                    else
+                    {
+
+                        sun.opacity = 1.0;
+                        sun.transparent = false;
+                    }
+
+                    if (x < 1000 && !flag)
+                    {
+                        particleSystem.scale.y += 0.005 ;
+                        x++;
+                    }
+                    else
+                    {
+                        flag = true;
+                        if (x == 0) flag = false;
+                        particleSystem.position.y = Math.random(5);
+                        x--;
+                    }
+
+                    document.getElementById
+
+                    requestAnimationFrame(render);
+                    renderer.render(scene, camera);
+                }
+
+                function createSphere(radius, segments)
+                {
+                    return new THREE.Mesh(
+                        new THREE.SphereGeometry(radius, segments, segments),
+                        new THREE.MeshPhongMaterial(
+                            {
+                                map: THREE.ImageUtils.loadTexture('img/p1.jpg'),
+                                bumpMap: THREE.ImageUtils.loadTexture('img/p3Map.jpg'),
+                                bumpScale: 0.005,
+                                specular: new THREE.Color('#190909')
+                            }));
+                }
+
+                function createRings(radius, segments)
+                {
+                    return new THREE.Mesh(
+                        new THREE.XRingGeometry(1.2 * radius, 2 * radius, 2 * segments, 5, 0, Math.PI * 2),
+                        new THREE.MeshBasicMaterial(
+                            { map: THREE.ImageUtils.loadTexture('img/9.jpg'),
+                            side: THREE.DoubleSide,
+                            transparent: true,
+                            opacity: 0.6
+                        }));
+                }
+
+                function createStars(radius, segments)
+                {
+                    return new THREE.Mesh(
+                        new THREE.SphereGeometry(radius, segments, segments),
+                        new THREE.MeshBasicMaterial(
+                            { map: THREE.ImageUtils.loadTexture('img/black.jpg'),
+                            side: THREE.BackSide
+                         }));
+                }
+
+
+                function makeParticles(scene)
+                {
+
+                    var seperation = 100, amountX = 50, amountY = 50;
+                    var particles, particle, count = 0;
+
+                    particles = new Array();
+
+                    var material = new THREE.SpriteCanvasMaterial({
+                        color: 0xffffff,
+                        program: function(context)
+                        {
+                            context.beginPath();
+                            context.arc( 0, 0, 0.5, 0, Math.PI * 2, true);
+                            context.fill();
+                        }
+                    });
+
+                    var i = 0;
+
+                    for ( var ix = 0; ix < amountX; ix ++ )
+                    {
+                        for ( var iy = 0; iy < amountY; iy ++ )
+                        {
+
+                            particle = particles[ i ++ ] = new THREE.Sprite( material );
+                            particle.position.x = ix * seperation - ( ( amountX * seperation ) / 2 );
+                            particle.position.z = iy * seperation - ( ( amountY * seperation ) / 2 );
+                            scene.add( particle );
+                        }
+                    }
+                }
+
+                function createStarParticles(scene)
+                {
+
+                }
+
+                function createSun(radius, segments)
+                {
+                    return new THREE.Mesh(
+                        new THREE.SphereGeometry(radius, segments, segments),
+                        new THREE.MeshBasicMaterial(
+                            {
+                                map: THREE.ImageUtils.loadTexture('img/sun.jpg'),
+                                bumpMap: THREE.ImageUtils.loadTexture('img/sunMap.jpg'),
+                                bumpScale: 0.5
+                                // color: 0xffffff,
+                                // shininess:  20
+                                // ambient: new THREE.AmbientLight(0xffffff)
+                            }));
+                }
+
+
+
+                function keyDownHandler(event)
+                {
+                    currKeysPressed[event.keyCode] = true;
+                    console.log(event.keyCode);
+
+                    if (event.keyCode == 76)
+                    {
+                        if (le == 0)
+                        {
+                            $("#p").animate({bottom: "8%"});
+                            $("#left").css("background-color", "yellow");
+                            le++;
+                        }
+                        else
+                        {
+                            $("#p").animate({bottom: "-88%"});
+                            $("#left").css("background-color", "white");
+                            le--;
+                        }
+                    }
+
+                    if (event.keyCode == 67)
+                    {
+
+                        if (ri == 0)
+                        {
+                            $("#s").animate({bottom: "8%"});
+                            $("#right").css("background-color", "yellow");
+                            ri++;
+                        }
+                        else
+                        {
+                            $("#s").animate({bottom: "-88%"});
+                            $("#right").css("background-color", "white");
+                            ri--;
+                        }
+                    }
+
+                    if (event.keyCode == 37) //left
+                    {
+                        x -= 0.05;
+                    }
+
+
+                    if (event.keyCode == 39) //right
+                    {
+                        x += 0.05;
+                    }
+
+
+                    if (event.keyCode == 38) //up
+                    {
+                        y += 0.05;
+                    }
+
+
+                    if (event.keyCode == 40) //down
+                    {
+                        y -= 0.05;
+                    }
+
+                    if (event.keyCode == 83)
+                    {
+                        sphere.scale.x += 0.1;
+                    }
+
+                    if (event.keyCode == 72)
+                    {
+
+                        var matrix = new THREE.Matrix4();
+
+                        matrix.set(  1,   0,  0,  0,
+                                    1/Math.tan(45),   1,  0,  0,
+                                      0,   0,  1,  0,
+                                      0,   0,  0,  1 );
+
+                        sphere.applyMatrix(matrix);
+
+                    }
+
+                    if (event.keyCode == 79)
+                       camera = new THREE.PerspectiveCamera(45, width / height, 0.05, 1000); ;
+
+                    if (event.keyCode == 80)
+                    {
+                       camera = new THREE.OrthographicCamera(width / - 100, width / 100, height / 100, height / - 100, 0.1, 2000);;
+
+
+                    camera.position.x = 3;
+                    camera.position.y = 2;
+                    camera.position.z = 2;
+                    }
+                }
+
+                function keyUpHandler(event)
+                {
+                    currKeysPressed[event.keyCode] = false;
+                    status = 0;
+                    scale = 0;
+                    shear = 0;
+                }
+
+
+render();
+
+                 }());
+                  });
+
+
+
+
+
+
+</script>
+
+
+</head>
+
+
+<body>
+<div id="webgl">
+
+    <center>
+        <div id="Detail">
+            <h2>Planet Unknown</h2>
+
+        </div>
+    </center>
+
+    <script>
+        var wid, hig;
+        wid = window.innerWidth
+            || document.documentElement.clientWidth
+            || document.body.clientWidth;
+
+        hig = window.innerHeight
+            || document.documentElement.clientHeight
+            || document.body.clientHeight;
+
+        document.getElementById("webgl").width = window.innerWidth - 100 ;
+        document.getElementById("webgl").height =  window.innerHeight - 200;
+       // document.getElementById("webgl").position = "fixed";
+         // document.getElementById("webgl").addEventListener("keyDownHandler", keyDownHandler, false);
+         // document.getElementById("webgl").addEventListener("mouseup", mouseUp, false);
+         // document.getElementById("webgl").addEventListener("mouseout", mouseUp, false);
+         // document.getElementById("webgl").addEventListener("mousemove", mouseMove, false);
+    </script>
+
+
+    <div>
+        <center>
+        <center>
+
+
+           <br/>
+
+            <div id="p">
+                <h2> Viewing:</h2>
+                <input type="checkbox" id="orthogonal" >Orthogonal (1)</input>
+                <input type="checkbox" id="oblique" >Oblique (2)</input>
+                <input type="checkbox" id="perspective" checked="checked">Perspective (3)</input> <br/>
+
+                <input type="checkbox" id="point" >Point (q)</input>
+                <input type="checkbox" id="spot" >Spot (w)</input>
+                <input type="checkbox" id="ambient" checked="checked">Ambient (e)</input>
+                <input type="checkbox" id="opacity" checked="checked">Opacity</input>
+
+
+                <h2> Lighting:</h2>
+                        <b>Colour:</b>
+                        <br /> <br/>
+                        R:  <input type="text" id="ambientR" value="0.5" /><br />
+                        G:  <input type="text" id="ambientG" value="0.5" /><br />
+                        B:  <input type="text" id="ambientB" value="0.3" /><br /><br />
+                Stars color:<input type="text" id="color" value="0xffffff"/> <br />
+            </div>
+
+        </center>
+
+                <div id="s">
+                    <center><h3 style="color: yellow;">CUBE</h3></center>
+                   Translate Y+ [Up] <br />
+                   Translate Y- [Down] <br />
+                   Shear x [s] <br />
+                    <br />
+
+                </div>
+        </center>
+
+        <button id="left" style="position: fixed; bottom: 1%; left: 0%; font-size: 120%; background-color: white;" > Lighting </button>
+        <button id="right" style="position: fixed; bottom:1%; right: 0%; font-size: 120%; background-color: white;"> Controls </button>
+    </div>
+
+
+    <script type="text/javascript">
+
+         var drag = false;
+
+         // var canvas = document.getElementById("canvas");
+
+         // function mouseDown(e)
+         // {
+         //    drag = true;
+         //        md = 1;
+         //    return false;
+         // }
+
+         // function mouseUp(e)
+         // {
+         //    drag = false;
+
+         //    if (en == 0)
+         //        md = 0;
+         // }
+
+            var x = -1, y = -1;
+            var md = false;
+            function handleMouseDown(event)
+            {
+                x = event.clientX;
+                y = event.clientY;
+
+                md = true;
+            }
+
+            function handleMouseUp(event)
+            {
+                x = -1;
+                y = -1;
+                md = false;
+            }
+
+            function handleMouseMove(event)
+            {
+                if (md == true)
+                {
+                    var xx = event.clientX;
+                    var yy = event.clientY;
+
+                    xx = (x-xx);
+                    yy = (y-yy);
+
+                    rPyramid = yy;
+
+                }
+            }
+
+
+
+         function mouseMove(e)
+         {
+
+
+                if (md)
+                {
+                    var xx = event.clientX;
+                    var yy = event.clientY;
+
+                    xx = (xx-x);
+                    yy = (yy-y);
+
+
+                  rPyramid = yy;
+                }
+
+
+         }
+
+         var le = 0;
+         var ri = 0;
+
+
+        $("#left").click(function(){
+            if (le == 0)
+            {
+                $("#p").animate({bottom: "8%"});
+                $("#left").css("background-color", "yellow");
+                le++;
+            }
+            else
+            {
+                $("#p").animate({bottom: "-88%"});
+                $("#left").css("background-color", "white");
+                le--;
+            }
+        });
+
+        $("#right").click(function(){
+            if (ri == 0)
+            {
+                $("#s").animate({bottom: "8%"});
+                $("#right").css("background-color", "yellow");
+                ri++;
+            }
+            else
+            {
+                $("#s").animate({bottom: "-88%"});
+                $("#right").css("background-color", "white");
+                ri--;
+            }
+        });
+
+        $("webgl").mousedown(function(){
+            alert();
+            $("#p").animate({bottom: "-68%"});
+            $("#s").animate({bottom: "-68%"});
+            $("#right").css("background-color", "white");
+            $("#left").css("background-color", "white");
+            le = 0;
+            ri = 0;
+        });
+
+
+
+    </script>
+
+</div>
+</body>
+
+</html>
