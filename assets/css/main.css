@@ -7,6 +7,16 @@
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
 
+.typed {
+	background-color: black;
+}
+@media (max-width: 700px) {
+	.img-center {
+		margin: 0 auto !important;
+		text-align: center;
+		display: block;
+	}
+}
 .red {
 	color: red !important;
 }
@@ -2512,8 +2522,8 @@
 
 	#header {
 		background-attachment: scroll,							scroll,					fixed;
-		background-image: url("images/top-3200.svg"), url("images/back.jpg"), url("../../images/header.jpg");
-
+		background-image: url("images/top-3200.svg"), url("../../images/code-transparent-background-1.png");
+		background-color: black;
 		background-position: bottom center,					top left,				center center;
 		background-repeat: repeat-x,						repeat,					no-repeat;
 		background-size: cover;
@@ -3164,6 +3174,8 @@
     -ms-transition: box-shadow 0.3s;
     transition: box-shadow 0.3s;
     padding: 10% 10% 10% 10%;
+
+	width: 100% !important;
 }
 
 .clients-grid .border-box a{
@@ -3175,8 +3187,8 @@
 .clients-grid .border-box img {
     padding: 30px 50px;
     display: block;
-    margin-left: auto;
-    margin-right: auto;
+	margin: 0 auto !important;
+	text-align: center !important;
 	max-width: 100%;
     width: auto;
 	height: auto;
