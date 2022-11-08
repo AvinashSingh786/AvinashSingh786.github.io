@@ -2521,27 +2521,38 @@
 
 /* Header */
 
+#background-video {
+
+	width: 100vw; 
+	  
+	left: 0;
+	right: 0;
+	top: 0; 
+	position: absolute;
+	z-index: -1;
+
+}
 	#header {
-		background-attachment: scroll,							scroll,					fixed;
-		background-image: url("images/top-3200.svg"), url("../../images/code-transparent-background-1.png");
+		 
 		background-color: black;
 		background-position: bottom center,					top left,				center center;
 		background-repeat: repeat-x,						repeat,					no-repeat;
-		background-size: cover;
+		 
 		color: rgba(255, 255, 255, 0.8);
 		padding: 10em 0 20em 0;
 		position: relative;
 		text-align: center;
+		z-index: 1;
 	}
 
-		#header:before, #header:after {
+		/* #header:before, #header:after {
 			background: rgba(224, 224, 224, 0.75);
 			content: '';
-			left: 50%;
+			left: 70%;
 			position: absolute;
 			width: 1px;
-			z-index: 0;
-		}
+			 
+		} */
 
 		#header:before {
 			height: calc(100% - 50px);
@@ -2552,6 +2563,7 @@
 		#header:after {
 			bottom: 0;
 			height: 50px;
+			 
 		}
 
 		#header a {
@@ -2592,6 +2604,7 @@
 			margin: 0 0 0.75em 0;
 			text-align: center;
 			width: 2.35em;
+			z-index: 1;
 		}
 
 			#header .logo.fa-paper-plane-o:before {
@@ -2723,9 +2736,9 @@
 /* Main */
 
 	#main {
-		padding: 6em 0 5em 0;
+		padding: 25em 0 5em 0;
 		position: relative;
-		z-index: 1;
+		z-index: 2;
 	}
 
 		#main:before {
@@ -2736,7 +2749,7 @@
 			position: absolute;
 			top: 0;
 			width: 1px;
-			z-index: -1;
+			z-index: 1;
 		}
 
 		#main header.major,
@@ -2840,9 +2853,10 @@
 
 			#header {
 				background-attachment: scroll,							scroll,							scroll;
-				background-image: url("images/top-1600.svg"), url("images/back.jpg"), url("../../images/header.jpg");
-	background-size: cover;
+				background-image: url("images/top-1600.svg");
+				background-size: cover;
 				padding: 6em 0 12em 0;
+				z-index: 1;
 			}
 
 				#header:before {
@@ -3002,9 +3016,10 @@
 		/* Header */
 
 			#header {
-				background-image: url("images/top-1280.svg"), url("images/back.jpg"), url("../../images/header.jpg");
+				background-image: url("images/top-1280.svg")   ;
 				background-size: cover;
 				padding: 3em 0 7em 0;
+				z-index: 1;
 			}
 
 				#header:before {
