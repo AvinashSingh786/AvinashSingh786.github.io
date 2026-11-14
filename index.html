@@ -25,13 +25,25 @@
 
 		<!-- Header -->
 			<div id="header">
+				<video id="background-video" autoplay loop muted>
+					<source src="assets/vid/background2.mp4" type="video/mp4">
+				</video>
 
-                <video id="background-video" autoplay loop muted >
-                    <source src="assets/vid/background2.mp4" type="video/mp4">
-                </video>
-				<span ><img class="img-circle" height="450" src="images/avi.jpg"></span>
-				<br/><br/><br/>
-				<h1 ><span class="typed"></span></h1><br/>
+				<div class="hero-panel">
+					<div class="avatar-wrap">
+						<img class="img-circle" src="images/avi.jpg" alt="Avinash Singh" />
+					</div>
+
+					<div class="hero-copy">
+						<p class="eyebrow">Computer Scientist • Researcher • Developer</p>
+						<h1><span class="typed"></span></h1>
+						<p class="lead">I build data-focused, secure software experiences and research-driven digital solutions that turn complex ideas into practical impact.</p>
+						<div class="hero-actions">
+							<a class="primary" href="#projects">View my work</a>
+							<a class="secondary" href="mailto:tashan.avi@gmail.com">Get in touch</a>
+						</div>
+					</div>
+				</div>
 			</div>
 
 		<!-- Main -->
@@ -243,8 +255,8 @@
 
                   <div class="col-md-4 col-sm-12 col-xs-12 col-lg-4">
                       <div class="border-box  fadeInUp" >
-                          <a target="_blank" href="https://www.jetbrains.com/">
-                            <img src="images/jetbrains.png" alt="clients">
+                          <a target="_blank" href="https://www.visual-paradigm.com/">
+                            <img src="images/Visual_Paradigm_logo.png" alt="clients">
                           </a>
                       </div><!-- /.border-box -->
                   </div><!-- /.col-md-3 -->
@@ -274,8 +286,8 @@
 
                     <div class="col-md-4 col-sm-12 col-xs-12 col-lg-4">
                         <div class="border-box  fadeInUp" >
-                            <a target="_blank" href="https://angular.io/">
-                                <img src="images/angular2_typescript_logo.png" alt="clients">
+                            <a target="_blank" href="https://draw.io/">
+                                <img src="images/drawio.png" alt="clients">
                             </a>
                         </div><!-- /.border-box -->
                     </div><!-- /.col-md-3 -->
@@ -306,7 +318,7 @@
                     <div class="col-md-4 col-sm-12 col-xs-12 col-lg-4">
                         <div class="border-box  fadeInUp" >
                             <a target="_blank" href="http://accessdata.com/products-services/forensic-toolkit-ftk">
-                                <img src="images/AccessDataLogo.gif" alt="clients">
+                                <img src="images/AccessDataLogo-transparent.png" alt="clients">
                             </a>
                         </div><!-- /.border-box -->
                     </div><!-- /.col-md-3 -->
@@ -314,7 +326,7 @@
                     <div class="col-md-4 col-sm-12 col-xs-12 col-lg-4">
                         <div class="border-box  fadeInUp">
                             <a target="_blank" href="https://www.mongodb.com">
-                                <img src="images/mongo.jpg" alt="clients">
+                                <img src="images/mongo-transparent.png" alt="clients">
                             </a>
                         </div><!-- /.border-box -->
                     </div><!-- /.col-md-3 -->
@@ -395,7 +407,7 @@
                     <div class="col-md-4 col-sm-12 col-xs-12 col-lg-4 col-xs-6">
                         <div class="border-box  fadeInUp" >
                             <a target="_blank" href="https://cuckoosandbox.org">
-                                <img src="images/cuckoo-black.png" alt="clients">
+                                <img src="images/cuckoo-white.png" alt="clients">
                             </a>
                         </div><!-- /.border-box -->
                     </div><!-- /.col-md-3 -->
@@ -487,7 +499,7 @@
                       <div class="col-md-4 col-sm-12 col-xs-12 col-lg-4">
                           <div class="border-box  fadeInUp" >
                               <a target="_blank" href="https://www.microsoft.com/en-za/windows?r=1">
-                                <img src="images/windows.jpg" alt="clients">
+                                <img src="images/windows-transparent.png" alt="clients">
                               </a>
                           </div><!-- /.border-box -->
                       </div><!-- /.col-md-3 -->
@@ -517,7 +529,7 @@
                       <div class="col-md-4 col-sm-12 col-xs-12 col-lg-4">
                           <div class="border-box  fadeInUp" >
                               <a target="_blank" href="https://trufflesuite.com/ganache/">
-                                <img src="images/ganache.webp" alt="clients">
+                                <img src="images/ganache-transparent.png" alt="clients">
                               </a>
                           </div><!-- /.border-box -->
                       </div><!-- /.col-md-3 -->
@@ -545,8 +557,8 @@
 
 				</header>
 				<br/><br/><br/>
-                <h2 class="skill">Projects</h2>
-				<div class="box alt container">
+                <h2 class="skill" id="projects">Projects</h2>
+				<div class="box alt container project-list">
 					<section class="feature left">
                             <a target="_blank" href="https://hyperperform.github.io/" class="image icon fa-signal"><img src="images/pic02.jpg" alt="" /></a>
 						<div class="content">
@@ -696,13 +708,28 @@
 
                 <h2 class="skill">Publications</h2>
                 <br/>
-                <div class=" container">
+                <div class="container publication-links">
                     <div class="row">
-                        <div class="col-6 col-lg-6 col-sm-6 col-md-6">
-                            <a href="https://scholar.google.co.za/citations?user=kMAtzREAAAAJ&hl=en" target="_blank"><img src="images/scholar.png" class="img-center" height="175" width="555"/></a>
+                        <div class="publication-item scholar-card">
+                            <span class="scholar-card-label">Google Scholar</span>
+                            <h3>Research impact</h3>
+                            <div class="scholar-metrics">
+                                <div class="scholar-metric">
+                                    <strong>585</strong>
+                                    <span>Citations</span>
+                                </div>
+                                <div class="scholar-metric">
+                                    <strong>11</strong>
+                                    <span>h-index</span>
+                                </div>
+                            </div>
+                            <a class="scholar-card-link" href="https://scholar.google.co.za/citations?user=kMAtzREAAAAJ&hl=en" target="_blank" rel="noopener noreferrer">
+                                View Google Scholar profile <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                            </a>
+                            <p class="scholar-card-note">Manually updated · See profile for current stats</p>
                         </div>
-                        <div class="col-6 col-lg-6 col-sm-6 col-md-6">
-                            <a href="https://orcid.org/0000-0003-3024-4076" target="_blank"><img src="images/orcid.png" class="img-center" width="285" height="175"/></a>
+                        <div class="publication-item">
+                            <a href="https://orcid.org/0000-0003-3024-4076" target="_blank"><img src="images/orcid.png" alt="ORCID" /></a>
                         </div>
                     </div>
                     <!-- <section class="feature left">
@@ -745,42 +772,48 @@
 
                 <h2 class="skill">Conferences / Workshops</h2>
                 <br/>
-                <div class="box alt container center-block">
-                    <section class="feature left">
-                        <div class="col-lg-3 img-center">
-                            <a target="_blank" href="https://www.asaudit.ac.za/product/national-asaudit-technology-event"><h4>NATE June 2019</h4></a>
-                            <a target="_blank" href="https://www.asaudit.ac.za/product/national-asaudit-technology-event"><p><i class="icon fa-file-pdf-o"></i> Presentation: on request</p></a>
+                <div class="container conference-grid">
+                    <section class="conference-list">
+                        <div class="conference-card">
+                            <a target="_blank" href="https://www.asaudit.ac.za/product/national-asaudit-technology-event"><h4>NATE </h4></a>
+                            <a target="_blank" href="https://www.asaudit.ac.za/product/national-asaudit-technology-event"><p><i class="icon fa-file-pdf-o"></i> Presented: 2019</p></a>
                             <a target="_blank" href="https://www.asaudit.ac.za/product/national-asaudit-technology-event"><img src="images/asaudit_sticky-logo_.png" width="250" alt="" /></a>
                         </div>
 
-                        <div class="col-lg-3 img-center">
-                            <a target="_blank" href="https://www.academic-conferences.org/conferences/iccws/"><h4>ICCWS March 2019</h4></a>
-                            <a target="_blank" href="https://www.academic-conferences.org/conferences/iccws/"><p><i class="icon fa-file-pdf-o"></i> Presentation: on request</p></a>
+                        <div class="conference-card">
+                            <a target="_blank" href="https://www.academic-conferences.org/conferences/iccws/"><h4>ICCWS</h4></a>
+                            <a target="_blank" href="https://www.academic-conferences.org/conferences/iccws/"><p><i class="icon fa-file-pdf-o"></i> Presented: 2019, 2020, 2022, 2024</p></a>
                             <a target="_blank" href="https://www.academic-conferences.org/conferences/iccws/"><img src="images/acpi.png" height="115" alt="" /></a>
                         </div>
 
-                        <div class="col-lg-3 img-center">
-                            <a target="_blank" href="https://0xcon.co.za"><h4>0xcon November 2018</h4>
-                                <p><i class="icon fa-group"></i> Attended</p>
-                                <img src="images/0xcon.png" alt="" height="115" /></a>
+                        <div class="conference-card">
+                            <a target="_blank" href="https://www.academic-conferences.org/conferences/eccws/"><h4>ECCWS</h4></a>
+                            <a target="_blank" href="https://www.academic-conferences.org/conferences/eccws/"><p><i class="icon fa-file-pdf-o"></i> Presented: 2026</p></a>
+                            <a target="_blank" href="https://www.academic-conferences.org/conferences/eccws/"><img src="images/acpi.png" height="115" alt="" /></a>
                         </div>
 
-                        <div class="col-lg-3 img-center">
-                            <a target="_blank" href="http://d-forensics.org/"><h4>ICDF2C September 2018</h4></a>
-                                <a target="_blank" href="http://d-forensics.org/"><p><i class="icon fa-file-pdf-o"></i> Presentation: on request</p></a>
+                        <div class="conference-card">
+                            <a target="_blank" href="https://0xcon.co.za"><h4>0xcon</h4></a>
+                            <a target="_blank" href="https://0xcon.co.za"><p><i class="icon fa-group"></i> Attended: 2018 - 2026</p></a>
+                            <a target="_blank" href="https://0xcon.co.za"><img src="images/0xcon.png" alt="0xcon" height="115" /></a>
+                        </div>
+
+                        <div class="conference-card">
+                            <a target="_blank" href="http://d-forensics.org/"><h4>ICDF2C </h4></a>
+                                <a target="_blank" href="http://d-forensics.org/"><p><i class="icon fa-file-pdf-o"></i> Presented: 2018</p></a>
                                 <a target="_blank" href="http://d-forensics.org/"><img src="images/icdf2c.png" height="60" alt="" /></a>
                         </div>
 
-                        <div class="col-lg-3 img-center">
-                            <a target="_blank" href="https://www.infosecsa.co.za/"><h4>ISSA August 2018</h4>
-                                <p><i class="icon fa-group"></i> Attended</p>
-                                <img src="images/issa.gif" height="115" alt="" /></a>
+                        <div class="conference-card">
+                            <a target="_blank" href="https://www.infosecsa.co.za/"><h4>ISSA </h4></a>
+                            <a target="_blank" href="https://www.infosecsa.co.za/"><p><i class="icon fa-group"></i> Attended: 2018, 2024</p></a>
+                            <a target="_blank" href="https://www.infosecsa.co.za/"><img src="images/issa.gif" height="115" alt="ISSA" /></a>
                         </div>
 
-                        <div class="col-lg-3 img-center">
-                            <a target="_blank" href="https://www.chpc.ac.za/index.php/training-workshops/hpc-school"><h4>CHPC Winter School July 2018</h4>
-                                <p><i class="icon fa-group"></i> Attended</p>
-                                <img src="images/chpc.jpg" height="115" alt="" /></a>
+                        <div class="conference-card">
+                            <a target="_blank" href="https://www.chpc.ac.za/index.php/training-workshops/hpc-school"><h4>CHPC Winter School</h4></a>
+                            <a target="_blank" href="https://www.chpc.ac.za/index.php/training-workshops/hpc-school"><p><i class="icon fa-group"></i> Attended: 2018</p></a>
+                            <a target="_blank" href="https://www.chpc.ac.za/index.php/training-workshops/hpc-school"><img src="images/chpc.png" height="115" alt="CHPC Winter School" /></a>
                         </div>
 
                     </section>
@@ -789,13 +822,19 @@
 
                 <h2 class="skill">Achievements / Merits</h2>
                 <br/>
-                <div class="box alt container img-center">
-                    <div class="col-lg-3">
-                        <a target="_blank" href="https://www.iitpsa.org.za/"><h4>IITTPSA Member</h4><img src="images/iittpsa.png" width="250" alt="" /></a>
+                <div class="container achievement-grid">
+                    <div class="achievement-card">
+                        <a target="_blank" href="https://www.iitpsa.org.za/">
+                            <h4>IITTPSA Member</h4>
+                            <img src="images/iittpsa.png" alt="IITPSA" />
+                        </a>
                     </div>
 
-                    <div class="col-lg-3 img-center">
-                        <a target="_blank" href="https://www.goldenkey.org/"><h4>Golden Key Member</h4><img src="images/gk.png" height="150" alt="" class="center-block"/></a>
+                    <div class="achievement-card">
+                        <a target="_blank" href="https://www.goldenkey.org/">
+                            <h4>Golden Key Member</h4>
+                            <img src="images/gk.png" alt="Golden Key" />
+                        </a>
                     </div>
                 </div>
 
@@ -807,7 +846,7 @@
 
 		<!-- Footer -->
 			<div id="footer">
-				<div class="container 75%">
+				<div class="container">
 
 					<header class="major last">
 						<h2>Contact Me</h2>
@@ -838,24 +877,13 @@
 						</div>
 					</form>
 
-					<div>
-						<table class="left table">
-						  <tr>
-						    <td class="mid" rowspan="5"><i class="fa fa-vcard-o fa-5x"></i></td>
-						  </tr>
-						  <tr>
-						  	<td><b>Name:</b> Avinash</td>
-						  </tr>
-						  <tr>
-						    <td><b>Surname:</b> Singh</td>
-						  </tr>
-						  <tr>
-						  	<td><b>GitHubUsername:</b> AvinashSingh786</td>
-						  </tr>
-						  <tr>
-						  	<td><b>Email:</b> tashan.avi@gmail.com</td>
-						  </tr>
-						</table>
+					<div class="contact-details">
+						<i class="fa fa-vcard-o contact-icon" aria-hidden="true"></i>
+						<div class="contact-facts">
+							<p><strong>Name</strong><span>Avinash Singh</span></p>
+							<p><strong>GitHub</strong><a href="https://github.com/AvinashSingh786">AvinashSingh786</a></p>
+							<p><strong>Email</strong><a href="mailto:tashan.avi@gmail.com">tashan.avi@gmail.com</a></p>
+						</div>
 					</div>
 
 					<ul class="icons">
