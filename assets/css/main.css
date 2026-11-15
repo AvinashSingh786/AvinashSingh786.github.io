@@ -2679,12 +2679,13 @@
 			padding: 0.9rem 1.4rem;
 			border-radius: 999px;
 			border: 1px solid rgba(255, 255, 255, 0.16);
-			font-size: 0.9rem;
+			font-size: 1.3rem;
 			font-weight: 700;
 			letter-spacing: 0.08rem;
 			text-transform: uppercase;
 			text-decoration: none;
 			transition: transform 0.2s ease, box-shadow 0.2s ease;
+		
 		}
 
 		#header .hero-actions a.primary {
@@ -3306,6 +3307,162 @@
 		font-weight: 800;
 	}
 
+.section-title {
+	position: relative;
+	isolation: isolate;
+	text-align: center;
+}
+
+.section-title > span {
+	position: relative;
+	z-index: 1;
+}
+
+.section-title:before,
+.section-title:after {
+	position: absolute;
+	top: 50%;
+	width: clamp(15rem, 29vw, 25rem);
+	aspect-ratio: 1;
+	border-radius: 50%;
+	color: var(--section-art-color);
+	content: "";
+	pointer-events: none;
+	transform: translateY(-45%);
+}
+
+.section-title:before {
+	z-index: -1;
+	right: 2rem;
+	border: 1px solid currentColor;
+	opacity: 0.08;
+	box-shadow: 0 0 0 1.5rem rgba(255, 255, 255, 0.012), 0 0 0 3rem rgba(255, 255, 255, 0.008);
+}
+
+.section-title:after {
+	z-index: -2;
+	right: 30px;
+	opacity: 0.14;
+	background: radial-gradient(ellipse at center, currentColor 0, transparent 70%);
+	mask-image: radial-gradient(ellipse at center, #000 25%, transparent 72%);
+}
+
+.section-title-technology {
+	--section-art-color: #63e6d2;
+}
+
+.section-title-technology:after {
+	background:
+		radial-gradient(circle, currentColor 1.5px, transparent 2px) 0 0 / 28px 28px,
+		linear-gradient(135deg, transparent 48%, currentColor 49%, transparent 50%) 0 0 / 44px 44px,
+		radial-gradient(ellipse at center, currentColor 0, transparent 70%);
+}
+
+.section-title-projects {
+	--section-art-color: #8caeff;
+}
+
+.section-title-projects:after {
+	background:
+		linear-gradient(currentColor 1px, transparent 1px) 0 0 / 32px 32px,
+		linear-gradient(90deg, currentColor 1px, transparent 1px) 0 0 / 32px 32px,
+		radial-gradient(ellipse at center, currentColor 0, transparent 70%);
+}
+
+.section-title-publications {
+	--section-art-color: #d3a6ff;
+}
+
+.section-title-publications:before,
+.section-title-publications:after,
+.section-title-conferences:before,
+.section-title-conferences:after {
+	right: auto;
+	left: 30px;
+}
+
+.section-title-publications:after {
+	background:
+		repeating-radial-gradient(ellipse at center, transparent 0 12px, currentColor 13px 14px, transparent 15px 25px),
+		radial-gradient(ellipse at center, currentColor 0, transparent 70%);
+}
+
+.section-title-reports {
+	--section-art-color: #ffbc79;
+}
+
+.section-title-reports:after {
+	background:
+		repeating-linear-gradient(0deg, transparent 0 17px, currentColor 18px 19px),
+		radial-gradient(ellipse at center, currentColor 0, transparent 70%);
+}
+
+.section-title-conferences {
+	--section-art-color: #6edcf1;
+}
+
+.section-title-conferences:after {
+	background:
+		radial-gradient(circle, currentColor 2px, transparent 3px) 0 0 / 24px 24px,
+		radial-gradient(ellipse at center, currentColor 0, transparent 70%);
+}
+
+.section-title-achievements {
+	--section-art-color: #ffd166;
+}
+
+.section-title-achievements:after {
+	background:
+		conic-gradient(from 25deg, transparent 0 12%, currentColor 13% 14%, transparent 15% 28%, currentColor 29% 30%, transparent 31% 52%, currentColor 53% 54%, transparent 55% 78%, currentColor 79% 80%, transparent 81%),
+		radial-gradient(ellipse at center, currentColor 0, transparent 70%);
+}
+
+.section-title-contact {
+	--section-art-color: #ff8ca8;
+}
+
+.section-title-contact:before {
+	right: auto;
+	left: 2rem;
+}
+
+.section-title-contact:after {
+	right: auto;
+	left: 30px;
+	background:
+		repeating-radial-gradient(ellipse at 30% 70%, transparent 0 18px, currentColor 19px 20px, transparent 21px 34px),
+		radial-gradient(ellipse at center, currentColor 0, transparent 70%);
+}
+
+@media screen and (max-width: 736px) {
+	.section-title:before,
+	.section-title:after {
+		top: 0;
+		right: 0;
+		left: auto;
+		width: 12rem;
+		transform: translateY(-25%);
+		opacity: 0.08;
+	}
+
+	.section-title:before {
+		right: 1rem;
+	}
+
+	.section-title-publications:before,
+	.section-title-publications:after,
+	.section-title-conferences:before,
+	.section-title-conferences:after,
+	.section-title-contact:after {
+		right: auto;
+		left: 0;
+	}
+
+	.section-title-contact:before {
+		right: 0;
+		left: auto;
+	}
+}
 
 
 
