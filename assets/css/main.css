@@ -3996,6 +3996,52 @@ body {
 	margin: 0;
 }
 
+#main .technical-report-list {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 1.25rem;
+	margin: 0;
+}
+
+#main .technical-report-card {
+	display: flex;
+	min-width: 0;
+	flex-direction: column;
+	padding: 1.5rem;
+	background: linear-gradient(145deg, rgba(21, 36, 54, 0.98), rgba(11, 24, 38, 0.98));
+	border: 1px solid var(--card-border);
+	border-radius: 20px;
+	text-align: left;
+}
+
+#main .technical-report-card h3 {
+	margin: 0 0 0.75rem;
+	color: var(--text);
+	font-size: 1.3rem;
+	line-height: 1.5;
+}
+
+#main .technical-report-card p {
+	margin: 0 0 1rem;
+	color: var(--muted);
+	font-size: 1.1rem;
+	text-align: center;
+}
+
+#main .technical-report-card .technical-report-link {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	width: fit-content;
+	margin-top: auto;
+	color: var(--accent);
+	font-size: 1.2rem;
+	font-weight: 600;
+	border-bottom: 0;
+	text-align: center;
+	margin: 0 auto;
+}
+
 #main .conference-list:before {
 	display: none;
 }
@@ -4176,6 +4222,10 @@ body {
 	}
 
 	#main .conference-list {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	#main .technical-report-list {
 		grid-template-columns: minmax(0, 1fr);
 	}
 
