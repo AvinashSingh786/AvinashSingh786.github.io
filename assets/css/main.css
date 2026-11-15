@@ -3984,3 +3984,58 @@ body {
 		grid-template-columns: 4.5rem minmax(0, 1fr);
 	}
 }
+
+@media screen and (max-width: 736px) {
+	#header {
+		padding: 2.5rem 1rem 4rem;
+	}
+
+	#header .hero-panel {
+		width: 100%;
+		max-width: 32rem;
+		flex-direction: column;
+		gap: 1.25rem;
+		padding: 1.5rem;
+		border-radius: 24px;
+		text-align: center;
+	}
+
+	#header .avatar-wrap img {
+		width: clamp(120px, 42vw, 170px);
+		height: clamp(120px, 42vw, 170px);
+	}
+
+	#header .hero-copy {
+		width: 100%;
+		min-width: 0;
+	}
+
+	#header .eyebrow {
+		font-size: clamp(0.9rem, 3.5vw, 1.05rem);
+		letter-spacing: 0.1em;
+		line-height: 1.5;
+	}
+
+	#header h1 {
+		font-size: clamp(1.8rem, 7vw, 2.4rem);
+		line-height: 1.2;
+		overflow-wrap: anywhere;
+	}
+
+	#header .lead {
+		max-width: none;
+		font-size: clamp(1.1rem, 4vw, 1.3rem);
+		line-height: 1.65;
+	}
+
+	#header .hero-actions {
+		justify-content: center;
+		gap: 0.75rem;
+		margin-top: 1.25rem;
+	}
+
+	#header .hero-actions a {
+		padding: 0.8rem 1rem;
+		font-size: 0.8rem;
+	}
+}
