@@ -752,7 +752,7 @@
                     <section class="feature left">
                         <a href="https://digifors.cs.up.ac.za" class="image icon  fa-briefcase"><img src="images/pic02.jpg" alt="" /></a>
                         <div class="content">
-                            <a target="_blank" href="https://digifors.cs.up.ac.za"><h3>DigiForS <img src="images/digifors_bin.png" alt="" height="50"></h3></a><br/>
+                            <a target="_blank" href="https://digifors.cs.up.ac.za"><h3><img src="images/digifors.png" alt="" height="50"></h3></a><br/>
                             <p> Digital Forensic Science (DigiForS) - design and creator of the research groups website.</p>
                         </div>
                     </section>
@@ -760,7 +760,7 @@
                     <section class="feature right">
                         <a href="https://icfl.cs.up.ac.za" class="image icon  fa-chain-broken"><img src="images/pic02.jpg" alt="" /></a>
                         <div class="content">
-                            <a target="_blank" href="https://icfl.cs.up.ac.za"><h3>ICFL <img src="images/ICFL-white-text.png" alt="" height="50"></h3></a><br/>
+                            <a target="_blank" href="https://icfl.cs.up.ac.za"><h3><img src="images/ICFL-white-text.png" alt="" height="50"></h3></a><br/>
                             <p> Intelligent Cyber Forensics Lab - website design and head of the lab.</p>
                         </div>
                     </section>
@@ -768,8 +768,23 @@
                     <section class="feature left">
                         <a href="https://malfe.cs.up.ac.za" class="image icon  fa-microchip"><img src="images/pic02.jpg" alt="" /></a>
                         <div class="content">
-                            <a target="_blank" href="https://malfe.cs.up.ac.za"><h3>MalFe <img src="images/malfe.png" alt="" height="100">(<i class="red text-center">*</i>)</h3></a><br/>
+                            <a target="_blank" href="https://malfe.cs.up.ac.za"><h3><img src="images/malfe.png" alt="" width="200">(<i class="red text-center">*</i>)</h3></a><br/>
                             <p> MalFe - Malware Feature Engineering Platform.</p>
+                        </div>
+                    </section>
+
+                    <section class="feature right">
+                        <a href="https://github.com/ICFL-UP/RanML" class="image icon  fa-line-chart"><img src="images/pic02.jpg" alt="" /></a>
+                        <div class="content">
+                            <a target="_blank" href="https://github.com/ICFL-UP/RanML"><h3><img src="images/ranml.png" alt="" >(<i class="red text-center">*</i>)</h3></a><br/>
+                            <p> RanML - Ransomware Machine Learning.</p>
+                        </div>
+                    </section>
+                     <section class="feature left">
+                        <a href="https://github.com/ICFL-UP/RanForRed" class="image icon  fa-shield"><img src="images/pic02.jpg" alt="" /></a>
+                        <div class="content">
+                            <a target="_blank" href="https://github.com/ICFL-UP/RanForRed"><h3><img src="images/ranforred.png" alt="" >(<i class="red text-center">*</i>)</h3></a><br/>
+                            <p> RanForRed - Ransomware Forensic Readiness Framework.</p>
                         </div>
                     </section>
 
@@ -940,6 +955,11 @@
                             <p>2025</p>
                             <a class="technical-report-link" href="https://iol.co.za/news/education/2025-06-26-ransomware-threats-how-ai-can-help-combat-cybercrime" target="_blank" rel="noopener noreferrer">Read full report <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
                         </article>
+                        <article class="technical-report-card">
+                            <h3>South Africa Seeks Help After Cyberattack Targets Air Traffic Control</h3>
+                            <p>2026</p>
+                            <a class="technical-report-link" href="https://www.darkreading.com/cyberattacks-data-breaches/south-africa-help-cyberattack-air-traffic-control" target="_blank" rel="noopener noreferrer">Read full report <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+                        </article>
                     </section>
                 </div>
 
@@ -993,6 +1013,12 @@
                             <a target="_blank" href="https://www.academic-conferences.org/conferences/eccws/"><h4>ECCWS</h4></a>
                             <a target="_blank" href="https://www.academic-conferences.org/conferences/eccws/"><p><i class="icon fa-file-pdf-o"></i> Presented: 2026</p></a>
                             <a target="_blank" href="https://www.academic-conferences.org/conferences/eccws/"><img src="images/acpi.png" height="115" alt="" /></a>
+                        </div>
+
+                        <div class="conference-card">
+                            <a target="_blank" href="https://bsidesjoburg.co.za/"><h4>BSides JHB</h4></a>
+                            <a target="_blank" href="https://bsidesjoburg.co.za/"><p><i class="icon fa-group"></i> Attended: 2024 - 2026</p></a>
+                            <a target="_blank" href="https://bsidesjoburg.co.za/"><img src="images/bsides.png" height="115" alt="" /></a>
                         </div>
 
 
@@ -1111,65 +1137,65 @@
 
             </script>
             <script>
-                 (async function loadOrcidPublicWorks() {
-                     var status = document.getElementById('orcid-card-status');
-                     var endpoint = 'https://pub.orcid.org/v3.0/0000-0003-3024-4076/record';
+                (async function loadOrcidPublicWorks() {
+                    var status = document.getElementById('orcid-card-status');
+                    var endpoint = 'https://pub.orcid.org/v3.0/0000-0003-3024-4076/record';
 
-                     try {
-                         var response = await fetch(endpoint, {
-                             headers: { Accept: 'application/vnd.orcid+json' }
-                         });
+                    try {
+                        var response = await fetch(endpoint, {
+                            headers: { Accept: 'application/vnd.orcid+json' }
+                        });
 
-                         if (!response.ok) {
-                             throw new Error('ORCID API returned HTTP ' + response.status);
-                         }
+                        if (!response.ok) {
+                            throw new Error('ORCID API returned HTTP ' + response.status);
+                        }
 
-                         var record = await response.json();
-                         var activities = record && record['activities-summary'];
-                         var works = activities && activities.works && activities.works.group;
+                        var record = await response.json();
+                        var activities = record && record['activities-summary'];
+                        var works = activities && activities.works && activities.works.group;
 
-                         if (!Array.isArray(works)) {
-                             throw new Error('ORCID record did not include a public works list');
-                         }
+                        if (!Array.isArray(works)) {
+                            throw new Error('ORCID record did not include a public works list');
+                        }
 
-                         var summaries = works.map(function (group) {
-                             var groupSummaries = group['work-summary'];
-                             return Array.isArray(groupSummaries) ? groupSummaries[0] : null;
-                         }).filter(Boolean);
-                         var workTypes = summaries.reduce(function (counts, work) {
-                             var type = work.type || 'other';
-                             counts[type] = (counts[type] || 0) + 1;
-                             return counts;
-                         }, {});
-                         var years = summaries.map(function (work) {
-                             var year = work['publication-date'] &&
-                                 work['publication-date'].year &&
-                                 work['publication-date'].year.value;
-                             return /^\d{4}$/.test(year || '') ? Number(year) : null;
-                         }).filter(Boolean);
-                         var peerReviews = activities['peer-reviews'] &&
-                             activities['peer-reviews'].group;
-                         var publicationYears = years.length
-                             ? Math.min.apply(null, years) + '–' + Math.max.apply(null, years)
-                             : 'Not listed';
+                        var summaries = works.map(function (group) {
+                            var groupSummaries = group['work-summary'];
+                            return Array.isArray(groupSummaries) ? groupSummaries[0] : null;
+                        }).filter(Boolean);
+                        var workTypes = summaries.reduce(function (counts, work) {
+                            var type = work.type || 'other';
+                            counts[type] = (counts[type] || 0) + 1;
+                            return counts;
+                        }, {});
+                        var years = summaries.map(function (work) {
+                            var year = work['publication-date'] &&
+                                work['publication-date'].year &&
+                                work['publication-date'].year.value;
+                            return /^\d{4}$/.test(year || '') ? Number(year) : null;
+                        }).filter(Boolean);
+                        var peerReviews = activities['peer-reviews'] &&
+                            activities['peer-reviews'].group;
+                        var publicationYears = years.length
+                            ? Math.min.apply(null, years) + '–' + Math.max.apply(null, years)
+                            : 'Not listed';
 
-                         document.getElementById('orcid-works-count').textContent = works.length.toLocaleString();
-                         document.getElementById('orcid-journal-count').textContent = (workTypes['journal-article'] || 0).toLocaleString();
-                         document.getElementById('orcid-conference-count').textContent = (workTypes['conference-paper'] || 0).toLocaleString();
-                         document.getElementById('orcid-reviews-count').textContent = Array.isArray(peerReviews)
-                             ? peerReviews.length.toLocaleString()
-                             : 'Not listed';
-                        
-                         status.textContent = '';
-                     } catch (error) {
-                         console.error('Unable to load public ORCID works:', error);
-                         ['orcid-works-count', 'orcid-journal-count', 'orcid-conference-count', 'orcid-reviews-count']
-                             .forEach(function (id) {
-                                 document.getElementById(id).textContent = 'Unavailable';
-                             });
-                         status.textContent = 'Could not load live data. View the public ORCID profile for details.';
-                     }
-                 })();
+                        document.getElementById('orcid-works-count').textContent = works.length.toLocaleString();
+                        document.getElementById('orcid-journal-count').textContent = (workTypes['journal-article'] || 0).toLocaleString();
+                        document.getElementById('orcid-conference-count').textContent = (workTypes['conference-paper'] || 0).toLocaleString();
+                        document.getElementById('orcid-reviews-count').textContent = Array.isArray(peerReviews)
+                            ? peerReviews.length.toLocaleString()
+                            : 'Not listed';
+                    
+                        status.textContent = '';
+                    } catch (error) {
+                        console.error('Unable to load public ORCID works:', error);
+                        ['orcid-works-count', 'orcid-journal-count', 'orcid-conference-count', 'orcid-reviews-count']
+                            .forEach(function (id) {
+                                document.getElementById(id).textContent = 'Unavailable';
+                            });
+                        status.textContent = 'Could not load live data. View the public ORCID profile for details.';
+                    }
+                })();
             </script>
 
 	</body>
