@@ -2628,11 +2628,31 @@
 		}
 
 		#header .avatar-wrap {
+			position: relative;
 			flex-shrink: 0;
 			padding: 0.4rem;
 			background: linear-gradient(135deg, rgba(119, 167, 255, 0.45), rgba(95, 224, 211, 0.4));
 			border-radius: 50%;
 			box-shadow: 0 18px 45px rgba(71, 109, 158, 0.38);
+		}
+
+		#header .sa-flag-badge {
+			position: absolute;
+			right: -0.75rem;
+			bottom: 0.7rem;
+			width: 3.6rem;
+			height: 2.4rem;
+			padding: 0.2rem;
+			border: 1px solid rgba(255, 255, 255, 0.75);
+			border-radius: 0.55rem;
+			background: rgba(9, 17, 29, 0.88);
+			box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+			transform: rotate(7deg);
+			transition: transform 0.2s ease;
+		}
+
+		#header .avatar-wrap:hover .sa-flag-badge {
+			transform: rotate(0) scale(1.08);
 		}
 
 		#header .avatar-wrap img {
@@ -2642,6 +2662,13 @@
 			object-fit: cover;
 			border-radius: 50%;
 			border: 3px solid rgba(255, 255, 255, 0.6);
+		}
+
+		#header .avatar-wrap .sa-flag-badge {
+			width: 3.6rem;
+			height: auto;
+			border: 1px solid rgba(255, 255, 255, 0.75);
+			border-radius: 0.55rem;
 		}
 
 		#header .hero-copy {
