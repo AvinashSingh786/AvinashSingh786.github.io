@@ -1833,9 +1833,24 @@
 
 	body {
 		background:
-			radial-gradient(circle at top, rgba(119, 167, 255, 0.2), transparent 32%),
+			radial-gradient(circle at var(--pointer-x, 50%) var(--pointer-y, 0%), rgba(119, 167, 255, 0.2), transparent 32%),
 			linear-gradient(180deg, var(--bg-dark) 0%, #091722 20%, #0d1724 100%);
+		background-attachment: fixed;
+		background-repeat: no-repeat;
 		color: var(--text);
+	}
+
+	body:before {
+		background-image: radial-gradient(rgba(166, 242, 235, 0.5) 1px, transparent 1.5px);
+		background-size: 28px 28px;
+		content: '';
+		inset: 0;
+		opacity: 0.38;
+		pointer-events: none;
+		position: fixed;
+		-webkit-mask-image: radial-gradient(ellipse 30rem 24rem at var(--pointer-x, 50%) var(--pointer-y, 50%), #000 0%, transparent 100%);
+		mask-image: radial-gradient(ellipse 30rem 24rem at var(--pointer-x, 50%) var(--pointer-y, 50%), #000 0%, transparent 100%);
+		z-index: 0;
 	}
 
 		body.is-loading * {
@@ -2570,6 +2585,35 @@
 		z-index: 1;
 		overflow: hidden;
 	}
+
+		#header .pointer-pattern {
+			position: absolute;
+			inset: 0;
+			z-index: 0;
+			overflow: hidden;
+			pointer-events: none;
+		}
+
+		#header .pointer-pattern:before,
+		#header .pointer-pattern:after {
+			content: '';
+			position: absolute;
+			inset: 0;
+		}
+
+		#header .pointer-pattern:before {
+			background:
+				radial-gradient(30rem circle at var(--pointer-x, 50%) var(--pointer-y, 50%), rgba(95, 224, 211, 0.2), transparent 78%),
+				radial-gradient(22rem circle at var(--pointer-x, 50%) var(--pointer-y, 50%), rgba(119, 167, 255, 0.15), transparent 85%);
+		}
+
+		#header .pointer-pattern:after {
+			background-image: radial-gradient(rgba(166, 242, 235, 0.5) 1px, transparent 1.5px);
+			background-size: 28px 28px;
+			opacity: 0.38;
+			-webkit-mask-image: radial-gradient(ellipse 30rem 24rem at var(--pointer-x, 50%) var(--pointer-y, 50%), #000 0%, transparent 100%);
+			mask-image: radial-gradient(ellipse 30rem 24rem at var(--pointer-x, 50%) var(--pointer-y, 50%), #000 0%, transparent 100%);
+		}
 
 		/* #header:before, #header:after {
 			background: rgba(224, 224, 224, 0.75);
